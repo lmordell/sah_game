@@ -13,6 +13,9 @@ build/
 develop-eggs/
 dist/
 downloads/
+server/bin
+server/include
+server/lib
 eggs/
 .eggs/
 lib/
@@ -99,3 +102,7 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# Custom
+server/server_readme.md
+server/pip-selfcheck.json
