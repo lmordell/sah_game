@@ -1,32 +1,42 @@
 # app/__init__.py
 
+""" Initialize main App module """
+
+###########
+# Imports #
+###########
+
 import os
 from flask import Flask, jsonify
-import pymongo
 
-# instantiate the app
-app = Flask(__name__)
+from app.config import APP_CONFIG
 
-# set config
-app.config.from_object('app.config.DevelopmentConfig')
-app_settings = os.getenv('APP_SETTINGS')
-app.config.from_object(app_settings)
+###########
+# Methods #
+###########
 
-# set up mongo DB env vars
-# app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+def create_app(config_name):
+    """ Create an instance of the Flask app """
+    app = Flask(__name__)
+    app.config.from_object(APP_CONFIG[config_name])
+    app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+    return app
 
-# client = pymongo.MongoClient(app.config['MONGO_URI'])
-# db = client.cah
+def register_blueprints(app):
+    """ Register imported blueprints """
+    app.register_blueprint(API)
+    return None
 
-# # instantiatce mongo DB
-# # mongo = PyMongo(app)
-# inserted = db.cah_demo.insert_one({ "work": True, "awesome": "yes" })
+##############################
+# Create App & DB Connection #
+##############################
 
-# print(inserted)
+CONFIG_NAME = os.getenv('APP_SETTINGS')
 
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!'
-    })
+# Create the app
+APP = create_app(CONFIG_NAME)
+
+from app.api import API
+
+# Register Blueprints
+register_blueprints(APP)

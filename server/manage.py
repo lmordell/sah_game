@@ -1,10 +1,20 @@
 # manage.py
 
+""" Entry point for the main Flask Application. Create the app & run it """
+
+###########
+# Imports #
+###########
+
 from flask_script import Manager
 
-from app import app
+from app import APP
 
-manager = Manager(app)
+MANAGER = Manager(APP)
+
+################
+# Run main app #
+################
 
 if __name__ == '__main__':
-    manager.run()
+    MANAGER.run()
