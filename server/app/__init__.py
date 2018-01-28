@@ -27,15 +27,16 @@ def register_blueprints(app):
     app.register_blueprint(API)
     return None
 
-##############################
-# Create App & DB Connection #
-##############################
+##############
+# Create App #
+##############
 
 CONFIG_NAME = os.getenv('APP_SETTINGS')
 
 # Create the app
 APP = create_app(CONFIG_NAME)
 
+# Import Blueprints here to avoid circular dependencies
 from app.api import API
 
 # Register Blueprints

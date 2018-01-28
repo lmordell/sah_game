@@ -4,6 +4,7 @@
 
 import sys
 import os
+import unittest
 from os.path import join, dirname
 from dotenv import load_dotenv
 
@@ -15,3 +16,6 @@ sys.path.append(os.getenv('APP_MODULE'))
 
 # Run the unit tests
 os.system("python -m unittest discover")
+
+if __name__ == "__main__":
+    unittest.main()

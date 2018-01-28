@@ -1,5 +1,6 @@
-# Modules
+# Modules / COnfigure for local development & production
 APP_MODULE=/Users/leemordell/Desktop/Code/Projects/PYTHON/sah_game/server/app
 
 # Mongo 
-MONGO_TEST_URI='mongodb://localhost:27017/sah_test'
+MONGO_URI='mongodb://localhost:27017/sah_test'
+MONGO_DBNAME='sah_test'
