@@ -105,4 +105,6 @@ ENV/
 
 # Custom
 server/server_readme.md
+server/production_todo.md
 server/pip-selfcheck.json
+server/dump.rdb

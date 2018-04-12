@@ -4,7 +4,6 @@
 
 import json
 from testing.util import FlaskPyMongoTest
-from pprint import pprint
 
 class GameTestCase(FlaskPyMongoTest):
     """This class represents the Game test case"""
@@ -32,24 +31,16 @@ class GameTestCase(FlaskPyMongoTest):
 
         self.__class__.uuid = data['uuid']
 
-        self.assertEqual(res.status_code, 201)
-        self.assertTrue(isinstance(data['uuid'], basestring))
-        self.assertEqual(len(data['uuid']), 22)
+        self.assertEqual(res.status_code, 201, msg='Creates game')
+        self.assertIsInstance(data['uuid'], basestring, msg='Generates uuid')
+        self.assertEqual(len(data['uuid']), 22, msg='uuid has 22 characters')
 
     def test_get_game(self):
         """Test API can create a game (GET request)"""
 
         res = self.client.get('/api/game?uuid=' + self.uuid)
         data = json.loads(res.data)
-        self.assertEqual(res.status_code, 200)
-        self.assertTrue(len(data['players']), 2)
-        self.assertEqual(data['uuid'], self.uuid)
 
-    # def test_delete_game(self):
-    #     """Test API can delete an existing game. (DELETE request)."""
-    #     with self.app.test_request_context():
-    #         res = self.client.delete('/api/game/12345')
-    #         self.assertEqual(res.status_code, 200)
-    #         result = self.client.get('/api/game/12345')
-    #         self.assertEqual(result.status_code, 404)
-
+        self.assertEqual(res.status_code, 200, msg='Gets game')
+        self.assertEqual(len(data['players']), 1, msg='Returns a single player')
+        self.assertEqual(data['uuid'], self.uuid, msg='Returns the correct uuid')

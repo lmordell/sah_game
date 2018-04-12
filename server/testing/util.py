@@ -4,6 +4,7 @@
 
 import os
 import unittest
+import uuid
 import flask_pymongo
 from app import APP
 
@@ -27,10 +28,15 @@ class FlaskPyMongoTest(FlaskRequestTest):
     @classmethod
     def setUpClass(cls):
         super(FlaskPyMongoTest, cls).setUpClass()
-        cls.mongo = flask_pymongo.PyMongo(cls.app, config_prefix='MONGO_TEST')
+
+        # Generate a unique config prefix for each test
+        config_prefix = uuid.uuid4()
+        cls.mongo = flask_pymongo.PyMongo(cls.app, config_prefix=config_prefix)
 
     @classmethod
     def tearDownClass(cls):
+
+        # Remove all data from the db
         cls.mongo.cx.drop_database(os.getenv('MONGO_DBNAME'))
 
         super(FlaskPyMongoTest, cls).tearDownClass()
